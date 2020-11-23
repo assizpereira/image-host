@@ -1,63 +1,194 @@
+var database;
+var walp = "hi";
+
+
+
+
 var dropdown = document.getElementsByClassName("dropdown-btn");
-     var i;
-     /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
-     for (i = 0; i < dropdown.length; i++) {
-        dropdown[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-        var dropdownContent = this.nextElementSibling;
-        
-     if (dropdownContent.style.display === "block") {
-       dropdownContent.style.display = "none";
-       } else {
-       dropdownContent.style.display = "block";
-       }
-       })
-    }
+var i;
+/* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+for (i = 0; i < dropdown.length; i++) {
+	dropdown[i].addEventListener("click", function () {
+		this.classList.toggle("active");
+		var dropdownContent = this.nextElementSibling;
+
+		if (dropdownContent.style.display === "block") {
+			dropdownContent.style.display = "none";
+		} else {
+			dropdownContent.style.display = "block";
+		}
+	})
+}
 
 
-    /*photos*/
+//firebase code
 
-    function getRandomSize(min, max) {
-      return Math.round(Math.random() * (max - min) + min);
-    }
-    
-    let allImages = "";
-    let url = "";
-    let url_arr = [];
-    
-    for (var i = 0; i < 25; i++) {
-      let width = getRandomSize(200, 400);
-      let height =  getRandomSize(200, 400);
-      url = "https://placekitten.com/"+width+"/"+height+'';
-    
-       
-       // append new value to the array
-       url_arr.push(url);
-      console.log(url_arr);
-    }
-    for (var i=0, len=url_arr.length; i<len; i++) {
-      allImages = new Image();
-      allImages.src = url_arr[i];
-      console.log("heereee")
-      console.log(url_arr[i])
-      const section_element = document.getElementById('photos');
-    
-    section_element.append(allImages);
+function setup() {
 
-    }
-      allImages = new Image();
-      allImages.src = url;
-      
-     // '<img src="https://placekitten.com/'+width+'/'+height+'" alt="pretty kitty">';
-      //allImages += '<img src="https://placekitten.com/'+width+'/'+height+'" alt="pretty kitty">';
-   
-    const section_element = document.getElementById('photos');
-    
-    section_element.append(allImages);
-    
-    console.log(section_element);
-    
-   
-    
-//const dji = '<img src="https://placekitten.com/265/265" alt="pretty kitty">';
-   // section_element.append(dji);
+
+	var firebaseConfig = {
+		apiKey: "AIzaSyDAIn4j55QfF2Oo-KCpBT2pEKNCyW6ybok",
+		authDomain: "wallpapernest.firebaseapp.com",
+		databaseURL: "https://wallpapernest.firebaseio.com",
+		projectId: "wallpapernest",
+		storageBucket: "wallpapernest.appspot.com",
+		messagingSenderId: "819954093074",
+		appId: "1:819954093074:web:393d10d72ea637d46fdccb"
+	};
+	// Initialize Firebase
+	firebase.initializeApp(firebaseConfig);
+	database = firebase.database();
+	loadFirebase();
+}
+
+function loadFirebase() {
+	var ref = database.ref("categories");
+	ref.on("value", gotData, errData);
+}
+
+function errData(error) {
+	console.log("Something went wrong.");
+	console.log(error);
+}
+
+// The data comes back as an object
+function gotData(data) {
+	console.log(data.val());
+	let users = data.val();
+	let keys = Object.keys(users);
+	console.log(keys);
+	/*
+		var ref = firebase.database().ref("categories");
+		ref.once("value")
+			.then(function (snapshot) {
+				var a = snapshot.exists();  // true
+				var b = snapshot.child("Animals").exists(); // true
+				var c = snapshot.child("Animals/desc").exists(); // true
+				console.log(a, b, c);
+			});
+	
+	*/
+
+	for (let i = 0; i < keys.length; i++) {
+
+
+		let k = keys[i];
+		let name = users[k].desc;
+		let type = users[k].thumbnail;
+
+		//adding image links to array
+		category_thumbnail.push(type);
+		category_alt.push(k);
+		//console.log(name, type);
+	}
+	populatethumb();
+
+
+}
+/*populate photos*/
+let category_thumbnail = [];
+let category_alt = [];
+
+function populatethumb() {
+	let allImages = '';
+
+	console.log(category_thumbnail);
+	for (let i = 0; i < category_thumbnail.length; i++) {
+
+		allImages = new Image();
+		allImages.src = category_thumbnail[i];
+		allImages.alt = category_alt[i]
+
+		let src = document.getElementById("photos");
+		src.appendChild(allImages);
+		//console.log(allImages);
+
+	}
+	get_category_thumb_data();
+}
+//getting the alt text of the photos
+function get_category_thumb_data() {
+	let categoryname;
+
+	document.getElementById('photos').addEventListener("click", function (e) {
+		categoryname = (e.target.alt);
+		open_category(categoryname);
+	});
+}
+
+
+//after user clicks on a category open those images
+function open_category(categoryname){
+	console.log(categoryname);
+	let ref = database.ref("images/"+categoryname);//accessing images
+	ref.on("value", Gotimages, errData);
+}
+
+
+
+
+let wallurls = [];
+
+function Gotimages(data) {
+	//console.log(data.val());
+	
+	let images = data.val();
+	let keys = Object.keys(images);
+	console.log(keys);
+
+
+	for (let i = 0; i < keys.length; i++) {
+
+
+		let k = keys[i];
+		let url = images[k].url;
+		
+
+		//adding image links to array
+		wallurls.push(url);
+		//category_alt.push(k);
+		console.log(url);
+
+	}
+	replace_prev_images()
+}
+
+
+
+
+
+
+function replace_prev_images(){
+	//saving cookie
+	
+	//module.exports = wallurls;
+	console.log(wallurls);
+
+	document.cookie = "wallup" + "=" + wallurls + ";" + 30 + ";path=/";
+	window.open ('images.html','_self',false);
+	
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+setup();
+
+
+
+
+
