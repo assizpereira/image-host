@@ -35,13 +35,14 @@ function populate_sidenav(categories){
 		let src = document.getElementById("category");
 		src.appendChild(value);
 
+	}
+		
 		document.getElementById('category').addEventListener("click", function (e) {
 			let catname = (e.target.value);
 			console.log(catname);
-			//open_category("Animals");
+			open_category(catname);
 		});
 
-}
 }
 
 
