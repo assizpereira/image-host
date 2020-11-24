@@ -1,5 +1,5 @@
 var database;
-var walp = "hi";
+
 
 
 
@@ -18,6 +18,30 @@ for (i = 0; i < dropdown.length; i++) {
 			dropdownContent.style.display = "block";
 		}
 	})
+}
+
+let cat_link;
+function populate_sidenav(categories){
+	
+	for (let i = 0; i < categories.length; i++) {
+		console.log(categories[i]);
+		cat_link = categories[i];	
+		let value = document.createElement('a'); // is a node
+		value.innerHTML = cat_link;
+		value.value = cat_link;
+
+		
+	
+		let src = document.getElementById("category");
+		src.appendChild(value);
+
+		document.getElementById('category').addEventListener("click", function (e) {
+			let catname = (e.target.value);
+			console.log(catname);
+			//open_category("Animals");
+		});
+
+}
 }
 
 
@@ -57,6 +81,7 @@ function gotData(data) {
 	let users = data.val();
 	let keys = Object.keys(users);
 	console.log(keys);
+	populate_sidenav(keys);
 	/*
 		var ref = firebase.database().ref("categories");
 		ref.once("value")
@@ -73,7 +98,7 @@ function gotData(data) {
 
 
 		let k = keys[i];
-		let name = users[k].desc;
+		//let name = users[k].desc;
 		let type = users[k].thumbnail;
 
 		//adding image links to array
@@ -170,25 +195,4 @@ function replace_prev_images(){
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 setup();
-
-
-
-
-

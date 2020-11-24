@@ -19,6 +19,7 @@ body {
     background-color:transparent;
     overflow-x: hidden;
     padding-top: 20px;
+   
   }
   
 
@@ -166,5 +167,6 @@ input:focus::-webkit-input-placeholder
 #wallpapers img {
   /* Just in case there are inline attributes */
   width: 100% !important;
-  height: auto !important;
+  height: 350pt !important;
+  overflow: hidden;
 }

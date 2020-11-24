@@ -45,3 +45,38 @@ function setup(){
     }
 }
 setup();
+
+
+
+
+
+
+var dropdown = document.getElementsByClassName("dropdown-btn");
+var i;
+/* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+
+for (i = 0; i < dropdown.length; i++) {
+	dropdown[i].addEventListener("click", function () {
+		this.classList.toggle("active");
+		var dropdownContent = this.nextElementSibling;
+
+		if (dropdownContent.style.display === "block") {
+			dropdownContent.style.display = "none";
+		} else {
+			dropdownContent.style.display = "block";
+		}
+	})
+}
+function get_category_sidenav(){
+    for (let i = 0; i < category_thumbnail.length; i++) {
+
+		allImages = new Image();
+		allImages.src = category_thumbnail[i];
+		allImages.alt = category_alt[i]
+
+		let src = document.getElementsByClassName("dropdown-container");
+		src.appendChild(allImages);
+		//console.log(allImages);
+}
+}
+
