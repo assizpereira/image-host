@@ -1,0 +1,11 @@
+{
+  "hosting": {
+    "site": "wallpapernest-341f7",
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
