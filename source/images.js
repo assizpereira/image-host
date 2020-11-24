@@ -14,12 +14,23 @@ function getCookie(cname) {
 
             wallsurl = walsur;
             console.log(wallsurl);
-            
+           /*shuffle images*/
+          /* Durstenfeld shuffle, algorithm*/
+            for (var x = wallsurl.length - 1; x > 0; x--) {
+                var j = Math.floor(Math.random() * (x + 1));
+                var temp = wallsurl[x];
+                wallsurl[x] = wallsurl[j];
+                wallsurl[j] = temp;
+            }
             
         }
     }
     return "";
 }
+
+
+
+  
 
 
 
@@ -29,7 +40,8 @@ function setup(){
     console.log(wallsurl);
 
 /*populate photos*/
-	//let allImages = '';
+    //let allImages = '';
+    
     
 	for (let i = 0; i < wallsurl.length; i++) {
         console.log(wallsurl.length);

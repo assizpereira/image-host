@@ -95,15 +95,39 @@ function gotData(data) {
 		//adding image links to array
 		category_thumbnail.push(type);
 		category_alt.push(k);
-		//console.log(name, type);
+		console.log(type);
+		
 	}
-	populatethumb();
+	shuffle(category_thumbnail);
+	
+	
 
 
 }
+/*shuffle images*/
+function shuffle(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+	}
+	category_thumbnail = array;
+	populatethumb();
+}
+  
+	
+	
+  
+
+  
+
+
+
 /*populate photos*/
 let category_thumbnail = [];
 let category_alt = [];
+
 
 function populatethumb() {
 	let allImages = '';
