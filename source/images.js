@@ -16,6 +16,7 @@ function getCookie(cname) {
             console.log(wallsurl);
            /*shuffle images*/
           /* Durstenfeld shuffle, algorithm*/
+          
             for (var x = wallsurl.length - 1; x > 0; x--) {
                 var j = Math.floor(Math.random() * (x + 1));
                 var temp = wallsurl[x];

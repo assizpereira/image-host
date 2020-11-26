@@ -1,7 +1,7 @@
 {
   "hosting": {
     "site": "wallpapernest-341f7",
-    "public": "public",
+    "public": "source",
     "ignore": [
       "firebase.json",
       "**/.*",
