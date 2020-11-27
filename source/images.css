@@ -1,0 +1,37 @@
+#wrapper_div{
+    position: relative;
+  width: 100%;
+  max-width: 400px;
+
+}
+
+
+#download_btn{
+position: absolute;
+cursor: pointer;   
+width: 29%;
+height: 5%;
+text-align: left;
+vertical-align: middle;
+bottom: 5%;
+left: 50%;
+transform: translate(-50%, -50%);
+-ms-transform: translate(-50%, -50%);
+border: none;
+display: inline;
+background: url("./img/download.svg") no-repeat;
+background-size: contain;
+background-position: right;
+background-color: #FBD786;
+border-radius: 12px;
+outline: none;
+
+
+
+   
+
+}
+#download_bt:hover{
+    
+}
+

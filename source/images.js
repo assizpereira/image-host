@@ -16,7 +16,7 @@ function getCookie(cname) {
             console.log(wallsurl);
            /*shuffle images*/
           /* Durstenfeld shuffle, algorithm*/
-          
+
             for (var x = wallsurl.length - 1; x > 0; x--) {
                 var j = Math.floor(Math.random() * (x + 1));
                 var temp = wallsurl[x];
@@ -40,35 +40,38 @@ function setup(){
     getCookie("wallup");
     console.log(wallsurl);
 
-/*populate photos*/
+/*populate wallpapers*/
     //let allImages = '';
-    
-    
 	for (let i = 0; i < wallsurl.length; i++) {
         console.log(wallsurl.length);
-    /*
-        let span = document.createElement('img');
-        span.src = wallsurl[i];
-        let allImages = document.createElement('a'); // is a node
-        
-       
-        allImages.href = wallsurl[i];
-        allImages.download = 'imahe.jpeg';
-        //span.appendChild(document.createAttribute('src'));
-        
-        allImages.appendChild(span);
-
-*/ 
-
 
         let img = document.createElement('img');
         img.src = wallsurl[i]; 
         
-        let a = document.createElement('a');
-        a.href = img.src;
-        a.download = "Myimage";
+        let button = document.createElement('input')
+        button.id = "download_btn";
+        button.type = 'button';
+    button.value = "download";
+  
+/*
+        let btn_img = document.createElement('span')
+        btn_img.id = "download_img_btn";
+        btn_img.src = "./img/download.svg";
+
+
+
+
+        button.appendChild(btn_img)
         
-        a.appendChild(img);
+  */
+        
+
+        let div_walls = document.createElement('div');
+        div_walls.id = "wrapper_div";
+        
+        
+        div_walls.appendChild(img);
+        div_walls.appendChild(button);
         //document.body.appendChild(a);
 
         //allImages.innerHTML = '<img class="Download"></img>';
@@ -80,12 +83,31 @@ function setup(){
 		//allImages.src = wallsurl[i];
 
 		let src = document.getElementById("wallpapers");
-		src.appendChild(a);
-		console.log(a);
-
+		src.appendChild(div_walls);
+    
     }
+    open_category_dropdown();
+    
 }
+
+function open_category_dropdown(){
+   // let dropdown = document.getElementsByClassName("dropdown-btn");
+    //console.log(dropdown);
+    document.getElementById("category").style.display = "block";
+        
+   
+}
+
+
+
+
+
+
+
+
 setup();
+
+
 
 
 
