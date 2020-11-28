@@ -1,5 +1,5 @@
-import { populate_sidenav} from './navig.js';
-
+import { populate_sidenav } from './navig.js';
+import {temp_urhold} from './waller_url.js';
 let database;
 let wallurls = [];
 
@@ -85,7 +85,7 @@ function gotData(data) {
 	let keys = Object.keys(users);
 	console.log(keys);
 	populate_sidenav(keys); //calling to populatecat.
-	
+
 
 	for (let i = 0; i < keys.length; i++) {
 
@@ -98,14 +98,14 @@ function gotData(data) {
 		category_thumbnail.push(type);
 		category_alt.push(k);
 		console.log(type);
-		
+
 	}
 	populatethumb();
 }
-	
-  
 
-  
+
+
+
 
 
 
@@ -122,7 +122,7 @@ function populatethumb() {
 		allImages = new Image();
 		allImages.src = category_thumbnail[i];
 		allImages.alt = category_alt[i]
-		
+
 
 		let src = document.getElementById("photos");
 		src.appendChild(allImages);
@@ -139,48 +139,86 @@ function get_category_thumb_data() {
 	let categoryname;
 	document.getElementById('photos').addEventListener("click", function (e) {
 		categoryname = (e.target.alt);
-		if(categoryname == "Prospective Wallpapers"){
+		if (categoryname == "Prospective Wallpapers") {
 			prospective_wallpapers();
 		}
-		else{
+		else {
 			open_category(categoryname);
 		}
-		
+
 	});
 }
-function prospective_wallpapers(){
+let getlinks_value = 0;
+let subtracter = 0;
+function prospective_wallpapers() {
 	prospective_walp = true;
 	const index = category_alt.indexOf("Prospective Wallpapers");
-if (index > -1) {
-	category_alt.splice(index, 1);
-}
-console.log(category_alt)
+	if (index > -1) {
+		category_alt.splice(index, 1);
+	}
+	console.log(category_alt)
+	getlinks_value = category_alt.length;
 
 
-	for (let i = 0; i < category_alt.length; i++){
 
-		console.log(category_alt);
-
-		let ref = database.ref("images/"+category_alt[i]);//accessing images
-		ref.on("value", Gotimages, errData);
+	for (let i = 0; i < category_alt.length; i++) {//loops 10 categories
+		
 		console.log(category_alt[i]);
+
+		let ref = database.ref("images/" + category_alt[i]);//accessing images
+		ref.on("value", driver_fireee, errData);
+		//console.log(category_alt[i]);
+
 	}
 
-	getlinks = true;
+}
+function driver_fireee(data){
+	subtracter += 1;
+	console.log("data val" + data.val());
 
+	let images = data.val();
+	let keys = Object.keys(images);
+	//console.log(keys);
+
+
+	for (let i = 0; i < keys.length; i++) {
+
+
+		let k = keys[i];
+		let url = images[k].url;
+
+
+		//adding image links to array
+		wallurls.push(url);
+		console.log(url);
+		//console.log(keys[i])
+		
+		
 	}
-//console.log(wallurls);
+	console.log(wallurls.length);
 
-	//replace_prev_images()
+	//document.cookie = "wallup" + "=" + wallurls + ";" + 400 + ";path=/";
+	sessionStorage.setItem("wallup", wallurls);
+	console.log(subtracter);
+	console.log(category_alt.length);
+	if (category_alt.length === subtracter){
+		console.log("hehrhhehehehehehe");
+		window.open('images.html', '_self', false);
+	}
+	//replace_prev_images();
+	//const arrr = new temp_urhold(wallurls);//exporting urls
+	console.log(wallurls);
+	//
+}
 
 
 
 
 
 //after user clicks on a category open those images
-export function open_category(categoryname){
+export function open_category(categoryname) {
 	console.log(categoryname);
-	let ref = database.ref("images/"+categoryname);//accessing images
+	let ref = database.ref("images/" + categoryname);//accessing images
 	ref.on("value", Gotimages, errData);
 }
 
@@ -190,11 +228,11 @@ export function open_category(categoryname){
 
 
 function Gotimages(data) {
-	
 
-	
+
+
 	console.log("data val" + data.val());
-	
+
 	let images = data.val();
 	let keys = Object.keys(images);
 	console.log(keys);
@@ -205,40 +243,46 @@ function Gotimages(data) {
 
 		let k = keys[i];
 		let url = images[k].url;
-		
+
 
 		//adding image links to array
 		wallurls.push(url);
 		console.log(url);
 		console.log(keys[i])
 
+		
 	}
-	if(prospective_walp = true ){
-		if(getlinks = true){
-			//replace_prev_images()
-		}
-	else{
-		//replace_prev_images();
+	
+console.log(wallurls);
+replace_prev_images() 
+	
 	}
-}
-	//
-}
 
 
 
 
 
 
-function replace_prev_images(){
+
+
+function replace_prev_images() {
 	//saving cookie
-	
-	//module.exports = wallurls;
-	console.log(wallurls);
 
-	document.cookie = "wallup" + "=" + wallurls + ";" + 30 + ";path=/";
-	window.open ('images.html','_self',false);
-	
+	//module.exports = wallurls;
+	//console.log(wallurls);
+	sessionStorage.setItem("wallup", wallurls);
+	//document.cookie = "wallup" + "=" + wallurls + ";" + 30 + ";path=/";
+	window.open('images.html', '_self', false);
+
 
 
 }
+
+
+
+
 setup();
+
+
+
+
