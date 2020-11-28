@@ -1,5 +1,5 @@
 import { open_category} from './app.js';
-
+import { prospective_wallpapers} from './app.js';
 
 let cat_link;
 
@@ -23,14 +23,16 @@ export function populate_sidenav(categories){
 		document.getElementById('category').addEventListener("click", function (e) {
 			let catname = (e.target.value);
 			console.log(catname);
-			open_category(catname);
-			
-
-		
+			if (catname == "Prospective Wallpapers") {
+				prospective_wallpapers();
+			}
+			else {
+				open_category(catname);
+			}
+	
 		});
 		
-		
-
 }
+
 //populate_sidenav();
 

@@ -150,7 +150,7 @@ function get_category_thumb_data() {
 }
 let getlinks_value = 0;
 let subtracter = 0;
-function prospective_wallpapers() {
+export function prospective_wallpapers() {
 	prospective_walp = true;
 	const index = category_alt.indexOf("Prospective Wallpapers");
 	if (index > -1) {
