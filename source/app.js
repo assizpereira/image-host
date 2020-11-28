@@ -1,6 +1,7 @@
 import { populate_sidenav} from './navig.js';
 
 let database;
+let wallurls = [];
 
 /*
 var dropdown = document.getElementsByClassName("dropdown-btn");
@@ -75,7 +76,8 @@ function errData(error) {
 	console.log("Something went wrong.");
 	console.log(error);
 }
-
+let category_thumbnail = [];
+let category_alt = [];
 // The data comes back as an object
 function gotData(data) {
 	console.log(data.val());
@@ -98,27 +100,8 @@ function gotData(data) {
 		console.log(type);
 		
 	}
-	shuffle(category_thumbnail);
-	
-	
-
-
-}
-/*shuffle images*/
-/* Durstenfeld shuffle, algorithm */
-
-function shuffle(array) {
-    for (var i = array.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-	}
-	category_thumbnail = array;
 	populatethumb();
 }
-  
-	
 	
   
 
@@ -127,14 +110,13 @@ function shuffle(array) {
 
 
 /*populate photos*/
-let category_thumbnail = [];
-let category_alt = [];
+
 
 
 function populatethumb() {
 	let allImages = '';
 
-	console.log(category_thumbnail);
+	//console.log(category_thumbnail);
 	for (let i = 0; i < category_thumbnail.length; i++) {
 
 		allImages = new Image();
@@ -149,15 +131,50 @@ function populatethumb() {
 	}
 	get_category_thumb_data();
 }
+let getlinks = false;
+let prospective_walp = false;
+
 //getting the alt text of the photos
 function get_category_thumb_data() {
 	let categoryname;
-
 	document.getElementById('photos').addEventListener("click", function (e) {
 		categoryname = (e.target.alt);
-		open_category(categoryname);
+		if(categoryname == "Prospective Wallpapers"){
+			prospective_wallpapers();
+		}
+		else{
+			open_category(categoryname);
+		}
+		
 	});
 }
+function prospective_wallpapers(){
+	prospective_walp = true;
+	const index = category_alt.indexOf("Prospective Wallpapers");
+if (index > -1) {
+	category_alt.splice(index, 1);
+}
+console.log(category_alt)
+
+
+	for (let i = 0; i < category_alt.length; i++){
+
+		console.log(category_alt);
+
+		let ref = database.ref("images/"+category_alt[i]);//accessing images
+		ref.on("value", Gotimages, errData);
+		console.log(category_alt[i]);
+	}
+
+	getlinks = true;
+
+	}
+//console.log(wallurls);
+
+	//replace_prev_images()
+
+
+
 
 
 //after user clicks on a category open those images
@@ -170,9 +187,12 @@ export function open_category(categoryname){
 
 
 
-let wallurls = [];
+
 
 function Gotimages(data) {
+	
+
+	
 	console.log("data val" + data.val());
 	
 	let images = data.val();
@@ -190,9 +210,18 @@ function Gotimages(data) {
 		//adding image links to array
 		wallurls.push(url);
 		console.log(url);
+		console.log(keys[i])
 
 	}
-	replace_prev_images()
+	if(prospective_walp = true ){
+		if(getlinks = true){
+			//replace_prev_images()
+		}
+	else{
+		//replace_prev_images();
+	}
+}
+	//
 }
 
 

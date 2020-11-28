@@ -9,9 +9,11 @@
 #download_btn{
 position: absolute;
 cursor: pointer;   
-width: 29%;
-height: 5%;
+width: auto;
+height: auto;
+display: inline;
 text-align: left;
+padding-right: 20px;
 vertical-align: middle;
 bottom: 5%;
 left: 50%;
@@ -32,6 +34,6 @@ outline: none;
 
 }
 #download_bt:hover{
-    
+    background-color: #f7797d;
 }
 

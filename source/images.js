@@ -48,22 +48,24 @@ function setup(){
         let img = document.createElement('img');
         img.src = wallsurl[i]; 
         
-        let button = document.createElement('input')
+        let button = document.createElement('button');
         button.id = "download_btn";
-        button.type = 'button';
-    button.value = "download";
-  
-/*
-        let btn_img = document.createElement('span')
-        btn_img.id = "download_img_btn";
-        btn_img.src = "./img/download.svg";
+        button.innerHTML = "download";
+        button.value = wallsurl[i];
 
-
-
-
-        button.appendChild(btn_img)
         
-  */
+  /*
+
+        let btn_data = document.createElement('a')
+        btn_data.id = "download_span_links";
+        btn_data.href = wallsurl[i];
+
+
+
+
+        button.appendChild(btn_data)
+        */
+  
         
 
         let div_walls = document.createElement('div');
@@ -83,12 +85,23 @@ function setup(){
 		//allImages.src = wallsurl[i];
 
 		let src = document.getElementById("wallpapers");
-		src.appendChild(div_walls);
-    
+        src.appendChild(div_walls);
+        //let btndown = document.getElementById("download_btn");
+        /*button.addEventListener("click", function () {
+            listenforclicks(button.value);
+        });
+        */
     }
+    
+
+    
+
+      
     open_category_dropdown();
     
+    
 }
+
 
 function open_category_dropdown(){
    // let dropdown = document.getElementsByClassName("dropdown-btn");
@@ -97,6 +110,44 @@ function open_category_dropdown(){
         
    
 }
+function listenforclicks(Fileurl){
+    console.log("hi");
+    //let i  = '';
+    //let btndown = document.getElementById("download_btn");
+    console.log(Fileurl);
+    if (Fileurl === undefined){
+
+    }
+    else{
+        download_image(Fileurl);
+    }
+}
+    
+let fileName = "Wallpapernest Wallpaper";
+function download_image(Fileurl){
+//downloading the image
+var xhr = new XMLHttpRequest();
+xhr.open("GET", Fileurl, true);
+xhr.responseType = "blob";
+xhr.onload = function(){
+    var urlCreator = window.URL || window.webkitURL;
+    var imageUrl = urlCreator.createObjectURL(this.response);
+    var tag = document.createElement('a');
+    tag.href = imageUrl;
+    tag.download = fileName;
+    document.body.appendChild(tag);
+    tag.click();
+    document.body.removeChild(tag);
+}
+xhr.send();
+
+
+
+
+}
+
+   
+
 
 
 
@@ -106,8 +157,6 @@ function open_category_dropdown(){
 
 
 setup();
-
-
 
 
 
